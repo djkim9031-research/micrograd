@@ -7,10 +7,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(SOURCES
     src/main.cpp
+    src/visualizer.cpp
 )
 
 set(HEADERS
     src/block.h
+    src/visualizer.h
 )
 
 add_executable(micrograd ${SOURCES} ${HEADERS})

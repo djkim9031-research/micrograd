@@ -8,14 +8,15 @@ namespace micrograd{
     class Value{
         public:
             double data;
-            std::set<std::shared_ptr<Value>> _prev;
-            std::string _op;
+            double grad;
+            std::set<std::shared_ptr<Value>> prevs;
+            std::string op;
 
-            Value(double data, std::set<std::shared_ptr<Value>> children = {}, std::string op = "")
-                : data(data), _prev(children), _op(op) {}
+            Value(double data, std::set<std::shared_ptr<Value>> children = {}, std::string op = "", double grad = 0.0)
+                : data(data), prevs(children), op(op), grad(grad) {}
             
             std::string repr() const {
-                return "Value(data = "+std::to_string(data)+")";
+                return "Value(data = "+std::to_string(data)+" | grad = " + std::to_string(grad) + ")";
             }
 
             std::shared_ptr<Value> operator+(const Value& other) const{

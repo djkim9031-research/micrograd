@@ -1,12 +1,9 @@
 #include <iostream>
-#include <set>
-#include <memory>
-#include <graphviz/gvc.h>
 
 #include "block.h"
+#include "visualizer.h"
 
 using namespace micrograd;
-
 
 int main() {
     auto a = std::make_shared<Value>(2.0);
@@ -15,7 +12,7 @@ int main() {
 
     auto d = (*(*a * *b) + *c);
 
-    std::cout<<"Value of d: "<<d->data<<std::endl;
-    
+    draw_plot(d);
+
     return 0;
 }
