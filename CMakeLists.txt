@@ -5,11 +5,14 @@ project(micrograd)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Include directories
-include_directories(SYSTEM "/usr/include/graphviz/")
+set(SOURCES
+    src/main.cpp
+)
 
-# Add executable
-add_executable(micrograd main.cpp)
+set(HEADERS
+    src/block.h
+)
 
-# Link Graphviz libraries
+add_executable(micrograd ${SOURCES} ${HEADERS})
+target_include_directories(micrograd PRIVATE "/usr/include/graphviz/")
 target_link_libraries(micrograd cgraph gvc)
