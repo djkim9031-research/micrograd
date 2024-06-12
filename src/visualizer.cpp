@@ -30,7 +30,7 @@ namespace micrograd{
             Agnode_t* node = agnode(g, const_cast<char*>(uid.c_str()), 1);
             
             std::ostringstream label_stream;
-            label_stream << "{data " << std::fixed << std::setprecision(2) << n->data << " | grad " << std::fixed << std::setprecision(2) << n->grad << "}";
+            label_stream << "{"+ n->label+ " | data " << std::fixed << std::setprecision(2) << n->data << " | grad " << std::fixed << std::setprecision(2) << n->grad << "}";
             std::string label = label_stream.str();
             agset(node, const_cast<char*>("label"), const_cast<char*>(label.c_str()));
 
