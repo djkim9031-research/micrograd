@@ -10,7 +10,7 @@ Using this building block, a simple multi-layer perceptron (MLP) is constructed 
 
 This code implements the following:
 1. Value class that builds/connects each operand to a gradient graph.
-2. Backpropagation of the grapdient graph.
+2. Backpropagation of the gradient graph.
 3. A neuron (weights and biases as operands)
 4. An neural network layer (multiple neurons)
 5. Multi-layer perceptron
