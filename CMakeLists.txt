@@ -13,6 +13,7 @@ set(SOURCES
 set(HEADERS
     src/block.h
     src/visualizer.h
+    src/nn.h
 )
 
 add_executable(micrograd ${SOURCES} ${HEADERS})
