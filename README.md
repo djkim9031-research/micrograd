@@ -22,5 +22,8 @@ This code implements the following:
 
 ![nn_graph](https://github.com/djkim9031-research/micrograd/assets/172340336/47e00ada-2fa7-46d9-870e-2cfa1fb90698)
 
+![image](https://github.com/djkim9031-research/micrograd/assets/172340336/9b2ce6a2-88f6-4002-84a1-24e0d94f9139)
+
+
 
 ![value_graph](https://github.com/djkim9031-research/micrograd/assets/172340336/e4f24341-4af9-4ecc-80b6-b314524846b3)
