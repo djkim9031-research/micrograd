@@ -38,7 +38,7 @@ int main() {
     MLP mlp({3, 4, 1});
     auto params = mlp.parameters();
     int itr = 1;
-    double threshold = 1e-6;
+    double threshold = 1e-4;
     while(true){
         auto loss = std::make_shared<Value>(0.0, init, "", "");
         for(int i=0; i<4; ++i){
@@ -55,11 +55,14 @@ int main() {
             micrograd::draw_value_graph(loss);
             break;
         }
-
+        
+        for(int i=0; i<params.size(); ++i){
+            params[i]->grad = 0.0;
+        }
         loss->backward();
         
         for(int i=0; i<params.size(); ++i){
-            params[i]->data += -0.01*params[i]->grad;
+            params[i]->data += -0.1*params[i]->grad;
         }
 
         itr += 1;
