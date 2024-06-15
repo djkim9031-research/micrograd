@@ -42,7 +42,7 @@ namespace micrograd{
 
             std::shared_ptr<Value> operator+(Value& other) {
                 auto other_ptr = other.shared_from_this();
-                auto output = std::make_shared<Value>(data + other.data, std::set<std::shared_ptr<Value>>{shared_from_this(), other_ptr}, "+", "("+label+"+"+other.label+")");
+                auto output = std::make_shared<Value>(data + other.data, std::set<std::shared_ptr<Value>>{shared_from_this(), other_ptr}, "+", "");//"("+label+"+"+other.label+")");
                 output->back_prop = [this, other_ptr, output](){
                     this->grad += 1.0 * output->grad;
                     other_ptr->grad += 1.0 * output->grad;
@@ -56,7 +56,7 @@ namespace micrograd{
                 label_stream << std::fixed << std::setprecision(2) <<other;
                 std::string dlabel = label_stream.str();
                 auto other_ptr = std::make_shared<Value>(other, init, "", dlabel);
-                auto output = std::make_shared<Value>(data + other, std::set<std::shared_ptr<Value>>{shared_from_this(), other_ptr}, "+", "("+label+"+"+other_ptr->label+")");
+                auto output = std::make_shared<Value>(data + other, std::set<std::shared_ptr<Value>>{shared_from_this(), other_ptr}, "+", "");//"("+label+"+"+other_ptr->label+")");
                 output->back_prop = [this, other_ptr, output](){
                     this->grad += 1.0 * output->grad;
                     other_ptr->grad += 1.0 * output->grad;
@@ -96,7 +96,7 @@ namespace micrograd{
 
             std::shared_ptr<Value> operator*(Value& other) {
                 auto other_ptr = other.shared_from_this();
-                auto output = std::make_shared<Value>(data * other_ptr->data, std::set<std::shared_ptr<Value>>{shared_from_this(), other_ptr}, "*", "("+label+"*"+other.label+")");
+                auto output = std::make_shared<Value>(data * other_ptr->data, std::set<std::shared_ptr<Value>>{shared_from_this(), other_ptr}, "*", "");//"("+label+"*"+other.label+")");
                 output->back_prop = [this, other_ptr, output](){
                     this->grad += other_ptr->data * output->grad;
                     other_ptr->grad += this->data * output->grad;
@@ -110,7 +110,7 @@ namespace micrograd{
                 label_stream << std::fixed << std::setprecision(2) <<other;
                 std::string dlabel = label_stream.str();
                 auto other_ptr = std::make_shared<Value>(other, init, "", dlabel);
-                auto output = std::make_shared<Value>(data * other, std::set<std::shared_ptr<Value>>{shared_from_this(), other_ptr}, "*", "("+label+"*"+other_ptr->label+")");
+                auto output = std::make_shared<Value>(data * other, std::set<std::shared_ptr<Value>>{shared_from_this(), other_ptr}, "*", "");//"("+label+"*"+other_ptr->label+")");
                 output->back_prop = [this, other_ptr, output](){
                     this->grad += other_ptr->data * output->grad;
                     other_ptr->grad += this->data * output->grad;
@@ -154,7 +154,7 @@ namespace micrograd{
                 label_stream << std::fixed << std::setprecision(2) <<other;
                 std::string dlabel = label_stream.str();
                 auto other_ptr = std::make_shared<Value>(other, init, "", dlabel);
-                auto output = std::make_shared<Value>(std::pow(data, other), std::set<std::shared_ptr<Value>>{shared_from_this(), other_ptr}, "^", "("+label+"^"+other_ptr->label+")");
+                auto output = std::make_shared<Value>(std::pow(data, other), std::set<std::shared_ptr<Value>>{shared_from_this(), other_ptr}, "^", "");//"("+label+"^"+other_ptr->label+")");
                 output->back_prop = [this, other_ptr, output](){
                     this->grad += (other_ptr->data * std::pow(this->data, other_ptr->data - 1)) * output->grad;
                 };
@@ -168,7 +168,7 @@ namespace micrograd{
                 label_stream << std::fixed << std::setprecision(2) <<other;
                 std::string dlabel = label_stream.str();
                 auto other_ptr = std::make_shared<Value>(other, init, "", dlabel);
-                auto output = std::make_shared<Value>(std::pow(other, data), std::set<std::shared_ptr<Value>>{other_ptr, shared_from_this()}, "^", "("+other_ptr->label+"^"+label+")");
+                auto output = std::make_shared<Value>(std::pow(other, data), std::set<std::shared_ptr<Value>>{other_ptr, shared_from_this()}, "^", "");//"("+other_ptr->label+"^"+label+")");
                 output->back_prop = [this, other_ptr, output](){
                     // y = a^x => y' = a^x * ln(a)
                     this->grad += (std::pow(other_ptr->data, this->data) * std::log(other_ptr->data)) * output->grad;
@@ -184,7 +184,7 @@ namespace micrograd{
 
             std::shared_ptr<Value> exp(){
                 double t = std::exp(data);
-                auto output = std::make_shared<Value>(t, std::set<std::shared_ptr<Value>>{shared_from_this()}, "exp", "exp_("+label+")");
+                auto output = std::make_shared<Value>(t, std::set<std::shared_ptr<Value>>{shared_from_this()}, "exp", "");//"exp_("+label+")");
                 output->back_prop = [this, t, output](){
                     this->grad += t * output->grad;
                 };
@@ -199,7 +199,7 @@ namespace micrograd{
 
             std::shared_ptr<Value> tanh(){
                 double t = (std::exp(2*data) - 1) / (std::exp(2*data) + 1);
-                auto output = std::make_shared<Value>(t, std::set<std::shared_ptr<Value>>{shared_from_this()}, "tanh", "tanh_("+label+")");
+                auto output = std::make_shared<Value>(t, std::set<std::shared_ptr<Value>>{shared_from_this()}, "tanh", "");//"tanh_("+label+")");
                 output->back_prop = [this, t, output](){
                     this->grad += (1 - t*t) * output->grad;
                 };
@@ -253,7 +253,7 @@ namespace micrograd{
         label_stream << std::fixed << std::setprecision(2) <<lhs;
         std::string dlabel = label_stream.str();
         auto lhs_ptr = std::make_shared<Value>(lhs, init, "", dlabel);
-        auto output = std::make_shared<Value>(lhs + rhs.data, std::set<std::shared_ptr<Value>>{lhs_ptr, rhs.shared_from_this()}, "+", "("+lhs_ptr->label+"+"+rhs.label+")");
+        auto output = std::make_shared<Value>(lhs + rhs.data, std::set<std::shared_ptr<Value>>{lhs_ptr, rhs.shared_from_this()}, "+", "");//"("+lhs_ptr->label+"+"+rhs.label+")");
         output->back_prop = [lhs_ptr, &rhs, output](){
             lhs_ptr->grad += 1.0 * output->grad;
             rhs.grad += 1.0 * output->grad;
@@ -272,7 +272,7 @@ namespace micrograd{
         label_stream << std::fixed << std::setprecision(2) <<lhs;
         std::string dlabel = label_stream.str();
         auto lhs_ptr = std::make_shared<Value>(lhs, init, "", dlabel);
-        auto output = std::make_shared<Value>(lhs * rhs.data, std::set<std::shared_ptr<Value>>{lhs_ptr, rhs.shared_from_this()}, "*", "("+lhs_ptr->label+"*"+rhs.label+")");
+        auto output = std::make_shared<Value>(lhs * rhs.data, std::set<std::shared_ptr<Value>>{lhs_ptr, rhs.shared_from_this()}, "*", "");//"("+lhs_ptr->label+"*"+rhs.label+")");
         output->back_prop = [lhs_ptr, &rhs, output](){
             lhs_ptr->grad += rhs.data * output->grad;
             rhs.grad += lhs_ptr->data * output->grad;
