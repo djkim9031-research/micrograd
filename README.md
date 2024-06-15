@@ -12,7 +12,7 @@ This code implements the following:
 1. Value class that builds/connects each operand to a gradient graph.
 2. Backpropagation of the gradient graph.
 3. A neuron (weights and biases as operands)
-4. An neural network layer (multiple neurons)
+4. A neural network layer (multiple neurons)
 5. Multi-layer perceptron
 6. A simple regression case with inputs and ground truth values, to demonstrate the convergence of NN model to the GT.
 7. Visualizer for value gradient graph.
